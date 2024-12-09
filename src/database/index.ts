@@ -1,5 +1,4 @@
 import mysql from "mysql2";
-import { Sequelize } from "sequelize";
 
 export const connection = () => {
     const connection = mysql.createConnection({
@@ -20,11 +19,3 @@ export const connection = () => {
       return connection;
 };
 
-export const sequelize = new Sequelize({
-    dialect: "mysql",
-    dialectModule: require("mysql2"),
-    host: process.env.DATABASE_HOST,
-    database: process.env.DATABASE_NAME,
-    username: process.env.DATABASE_USERNAME,
-    password: process.env.DATABASE_PASSWORD,
-});

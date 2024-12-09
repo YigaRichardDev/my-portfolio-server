@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../..";
+import { sequelize } from "../../../lib/index";
 
 export interface UserInstance extends Model {
   id: number;
@@ -8,7 +8,7 @@ export interface UserInstance extends Model {
   password: string;
   role: 'admin' | 'super_admin';
   refresh_token: string | null;
-  is_active: 'Yes' | 'No';
+  is_active: 'Yes' | 'No'; 
 }
 
 export const User = sequelize.define<UserInstance>(
@@ -35,7 +35,7 @@ export const User = sequelize.define<UserInstance>(
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM('admin' , 'super_admin'),
+      type: DataTypes.ENUM('admin', 'super_admin'),
       allowNull: false,
       defaultValue: 'admin',
     },
@@ -52,7 +52,7 @@ export const User = sequelize.define<UserInstance>(
   },
   {
     tableName: "users",
-    timestamps: true, 
-    underscored: true, // Use snake_case column names
+    timestamps: true,
+    underscored: true,
   }
 );
