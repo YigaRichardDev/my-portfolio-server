@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../.."; 
+import { sequelize } from "../../../lib";
 import { Blog } from "../blogs";
 
 export interface CommentInstance extends Model {

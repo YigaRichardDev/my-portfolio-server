@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../.."; 
+import { sequelize } from "../../../lib";
 
 export interface ContactInstance extends Model {
   id: number;

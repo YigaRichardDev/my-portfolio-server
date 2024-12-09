@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { sequelize } from "../.."; 
+import { sequelize } from "../../../lib"; 
 
 export interface ProjectInstance extends Model {
   id: number;
