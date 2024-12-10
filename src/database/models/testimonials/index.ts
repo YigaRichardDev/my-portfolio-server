@@ -5,6 +5,7 @@ export interface TestimonialInstance extends Model {
   id: number;
   name: string;
   message: string;
+  image: string | null;
 }
 
 export const Testimonial = sequelize.define<TestimonialInstance>(
@@ -24,6 +25,11 @@ export const Testimonial = sequelize.define<TestimonialInstance>(
     message: {
       type: DataTypes.TEXT,
       allowNull: false,
+    },
+    image: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
+      defaultValue: null,
     },
   },
   {

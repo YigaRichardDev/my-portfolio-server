@@ -120,6 +120,12 @@ blogRouter.delete("/:id", async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
+    // Delete the associated image
+    if (blog.image) {
+      const oldImagePath = path.join(__dirname, "../../", blog.image);
+      fs.unlinkSync(oldImagePath);
+    }
+
     // Delete the blog
     await blog.destroy();
 
@@ -139,68 +145,68 @@ blogRouter.delete("/:id", async (req: Request, res: Response): Promise<void> => 
 });
 
 blogRouter.put("/:id", upload.single("image"), async (req: Request, res: Response): Promise<void> => {
-    const { id } = req.params;
-    const { title, content, category, meta_description } = req.body;
+  const { id } = req.params;
+  const { title, content, category, meta_description } = req.body;
 
-    try {
-      // Find the blog by ID
-      const blog = await Blog.findByPk(id);
+  try {
+    // Find the blog by ID
+    const blog = await Blog.findByPk(id);
 
-      if (!blog) {
-        res.status(404).json({
-          status: "error",
-          data: null,
-          message: `Blog with ID ${id} not found.`,
-        });
-        return;
-      }
-
-      let imagePath = blog.image;
-
-      // Handle new image upload
-      if (req.file) {
-        // Construct the path for the uploaded file
-        const newImagePath = `/uploads/${req.file.filename}`;
-
-        // If there's an old image, delete it
-        if (imagePath) {
-          const oldImagePath = path.join(__dirname, "../../", imagePath);
-          fs.unlink(oldImagePath, (err) => {
-            if (err) console.error("Error deleting old image:", err);
-          });
-        }
-
-        // Update the image path
-        imagePath = newImagePath;
-      }
-
-      // Update blog details
-      blog.title = title || blog.title;
-      blog.content = content || blog.content;
-      blog.category = category || blog.category;
-      blog.meta_description = meta_description || blog.meta_description;
-      blog.image = imagePath;
-      // Update the slug if the title is updated
-      if (title) {
-        blog.slug =title.toLowerCase().replace(/\s+/g, "-");
-      }
-
-      await blog.save();
-
-      res.status(200).json({
-        status: "success",
-        data: blog,
-        message: "Blog updated successfully.",
-      });
-    } catch (err) {
-      console.error("Error updating blog:", err);
-      res.status(500).json({
+    if (!blog) {
+      res.status(404).json({
         status: "error",
         data: null,
-        message: "Internal server error.",
+        message: `Blog with ID ${id} not found.`,
       });
+      return;
     }
+
+    let imagePath = blog.image;
+
+    // Handle new image upload
+    if (req.file) {
+      // Construct the path for the uploaded file
+      const newImagePath = `/uploads/${req.file.filename}`;
+
+      // If there's an old image, delete it
+      if (imagePath) {
+        const oldImagePath = path.join(__dirname, "../../", imagePath);
+        fs.unlink(oldImagePath, (err) => {
+          if (err) console.error("Error deleting old image:", err);
+        });
+      }
+
+      // Update the image path
+      imagePath = newImagePath;
+    }
+
+    // Update blog details
+    blog.title = title || blog.title;
+    blog.content = content || blog.content;
+    blog.category = category || blog.category;
+    blog.meta_description = meta_description || blog.meta_description;
+    blog.image = imagePath;
+    // Update the slug if the title is updated
+    if (title) {
+      blog.slug = title.toLowerCase().replace(/\s+/g, "-");
+    }
+
+    await blog.save();
+
+    res.status(200).json({
+      status: "success",
+      data: blog,
+      message: "Blog updated successfully.",
+    });
+  } catch (err) {
+    console.error("Error updating blog:", err);
+    res.status(500).json({
+      status: "error",
+      data: null,
+      message: "Internal server error.",
+    });
   }
+}
 );
 
 export default blogRouter;

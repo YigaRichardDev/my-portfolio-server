@@ -4,6 +4,12 @@ import path from "path";
 import { connection } from "./database";
 import userRouter from "./api/user";
 import blogRouter from "./api/blog";
+import commentRouter from "./api/comment";
+import contactRouter from "./api/contact";
+import testimonialRouter from "./api/testimonial";
+import projectRouter from "./api/project";
+import serviceRouter from "./api/service";
+import serviceDetailRouter from "./api/serviceDetail";
 
 dotenv.config();
 
@@ -19,6 +25,12 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use("/api/users", userRouter);
 app.use("/api/blogs", blogRouter);
+app.use("/api/comments", commentRouter);
+app.use("/api/contacts", contactRouter);
+app.use("/api/testimonials", testimonialRouter);
+app.use("/api/projects", projectRouter);
+app.use("/api/services", serviceRouter);
+app.use("/api/service-details", serviceDetailRouter);
 
 connection();
 

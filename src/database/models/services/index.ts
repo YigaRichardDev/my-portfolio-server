@@ -5,11 +5,8 @@ export interface ServiceInstance extends Model {
   id: number;
   title: string;
   description: string;
-  icon: string | null;
-  slug: string;
-  detail: string | null;
-  approach: string | null;
   image: string | null;
+  slug: string;
 }
 
 export const Service = sequelize.define<ServiceInstance>(
@@ -30,7 +27,7 @@ export const Service = sequelize.define<ServiceInstance>(
       type: DataTypes.TEXT,
       allowNull: false,
     },
-    icon: {
+    image: {
       type: DataTypes.STRING(255),
       allowNull: true,
       defaultValue: null,
@@ -39,21 +36,6 @@ export const Service = sequelize.define<ServiceInstance>(
       type: DataTypes.STRING(100),
       allowNull: false,
       unique: true,
-    },
-    detail: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      defaultValue: null,
-    },
-    approach: {
-      type: DataTypes.TEXT,
-      allowNull: true,
-      defaultValue: null,
-    },
-    image: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
-      defaultValue: null,
     },
   },
   {
