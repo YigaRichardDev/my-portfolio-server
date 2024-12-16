@@ -25,7 +25,7 @@ userRouter.post("/add-user", async (req: Request, res: Response): Promise<void> 
         const { username, email, password } = value;
 
         // Check if email is unique
-        const existingUser = await User.findOne({ where: { email } });
+        const existingUser = await User.findOne({ where: { email: email } });
         if (existingUser) {
             res.status(400).json({
                 status: "error",
@@ -160,7 +160,7 @@ userRouter.put("/edit-user/:id", async (req: Request, res: Response): Promise<vo
 
         // Check if the email is already in use by another user
         if (email && email !== user.email) {
-            const emailExists = await User.findOne({ where: { email } });
+            const emailExists = await User.findOne({ where: { email: email } });
             if (emailExists) {
                 res.status(400).json({
                     status: "error",
@@ -243,7 +243,7 @@ userRouter.post("/login", async (req: Request, res: Response): Promise<void> => 
         const { email, password } = value;
 
         // Check if the user exists
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email: email } });
         if (!user) {
             res.status(401).json({
                 status: "error",

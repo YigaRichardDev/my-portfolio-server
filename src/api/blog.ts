@@ -13,7 +13,7 @@ blogRouter.post("/add-blog", upload.single("image"), async (req: Request, res: R
     if (!title || !content || !user_id || !category) {
       res.status(400).json({
         status: "error",
-        message: "Title, content, user_id, and category are required.",
+        message: "All fields are required.",
       });
       return;
     }
